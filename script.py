@@ -1,6 +1,6 @@
 import os
 
-# Directorio raíz donde se encuentran las carpetas con las secuencias de png
+# Directorio raíz donde se encuentran las carpetas con las secuencias de jpeg
 directorio_raiz = "D:/Videojuegos/EpicGames/UnrealMultiguerras/Saved/MovieRenders"
 
 # Velocidad de cuadro (FPS)
@@ -21,18 +21,18 @@ def formato_segundos(segundos):
 
 # Recorre todas las carpetas en el directorio raíz
 for carpeta in os.listdir(directorio_raiz):
-    carpeta_path = os.path.join(directorio_raiz, carpeta)
+    carpeta_path = directorio_raiz + '/' + carpeta + '/'
     
-    # Verifica si la carpeta contiene archivos png
+    # Verifica si la carpeta contiene archivos jpeg
     if os.path.isdir(carpeta_path):
-        archivos_png = [archivo for archivo in os.listdir(carpeta_path) if archivo.endswith(".png")]
+        archivos_jpeg = [archivo for archivo in os.listdir(carpeta_path) if archivo.endswith(".jpeg")]
         
-        # Ordena los archivos png alfabéticamente
-        archivos_png.sort()
+        # Ordena los archivos jpeg alfabéticamente
+        archivos_jpeg.sort()
         
-        # Verifica si hay al menos un archivo png en la carpeta
-        if archivos_png:
-            primer_archivo = archivos_png[0]
+        # Verifica si hay al menos un archivo jpeg en la carpeta
+        if archivos_jpeg:
+            primer_archivo = archivos_jpeg[0]
             nombre_archivo = os.path.splitext(primer_archivo)[0]
             nombre_escena, numero_frame = nombre_archivo.split(".")
             numero_frame = int(numero_frame)
@@ -43,3 +43,40 @@ for carpeta in os.listdir(directorio_raiz):
             print(f"Carpeta: {carpeta}")
             print(f"  Tiempo de inicio (segundos): {tiempo_segundos}")
             print(hhmmss)
+
+
+            # Convertir a .mov con ffmpeg
+
+            import subprocess
+            import os
+
+            # Directorio de las imágenes jpeg
+            input_directory = carpeta_path
+
+            # Nombre del archivo de salida
+            output_file = directorio_raiz + "/" + f"{nombre_escena}.mov"
+
+            # Timecode en formato HH:MM:SS:FF (horas, minutos, segundos, fotogramas)
+            timecode = hhmmss  # Por ejemplo, comenzar en 0 horas, 0 minutos, 0 segundos y 0 fotogramas
+
+            # Obtener la lista de archivos en el directorio de entrada
+            image_files = sorted([f for f in os.listdir(input_directory) if f.endswith(".jpeg")])
+
+            # Construir una lista de argumentos para FFmpeg
+            ffmpeg_args = [
+                "ffmpeg",
+                "-framerate", "24",  # Tasa de fotogramas de salida (ajusta según sea necesario)
+                "-start_number", str(numero_frame),  # Número de inicio para los nombres de archivo
+                "-i", input_directory + f"{nombre_escena}.%07d.jpeg",  # Patrón de nombres de archivo
+                "-c:v", "libx264",
+                "-pix_fmt", "yuv420p",
+                "-crf", "18",  # Calidad de compresión (ajusta según sea necesario)
+                "-timecode", timecode,
+                output_file
+            ]
+
+            # Ejecutar el comando FFmpeg para crear el video
+            subprocess.run(ffmpeg_args)
+
+            print(f"Video creado con timecode y guardado como '{output_file}'.")
+            print(ni)
