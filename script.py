@@ -71,12 +71,12 @@ for carpeta in os.listdir(directorio_raiz):
                 "-c:v", "libx264",
                 "-pix_fmt", "yuv420p",
                 "-crf", "18",  # Calidad de compresión (ajusta según sea necesario)
-                "-timecode", timecode,
+                "-timecode", timecode + ":00",  # Agrega ":00" al final del timecode
                 output_file
             ]
+
 
             # Ejecutar el comando FFmpeg para crear el video
             subprocess.run(ffmpeg_args)
 
             print(f"Video creado con timecode y guardado como '{output_file}'.")
-            print(ni)
