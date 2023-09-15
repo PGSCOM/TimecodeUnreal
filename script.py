@@ -1,6 +1,6 @@
 import os
 
-# Directorio raíz donde se encuentran las carpetas con las secuencias de jpeg
+# Directorio raíz donde se encuentran las carpetas con las secuencias de png
 directorio_raiz = "D:/Videojuegos/EpicGames/UnrealMultiguerras/Saved/MovieRenders"
 
 # Velocidad de cuadro (FPS)
@@ -23,16 +23,16 @@ def formato_segundos(segundos):
 for carpeta in os.listdir(directorio_raiz):
     carpeta_path = directorio_raiz + '/' + carpeta + '/'
     
-    # Verifica si la carpeta contiene archivos jpeg
+    # Verifica si la carpeta contiene archivos png
     if os.path.isdir(carpeta_path):
-        archivos_jpeg = [archivo for archivo in os.listdir(carpeta_path) if archivo.endswith(".jpeg")]
+        archivos_png = [archivo for archivo in os.listdir(carpeta_path) if archivo.endswith(".png")]
         
-        # Ordena los archivos jpeg alfabéticamente
-        archivos_jpeg.sort()
+        # Ordena los archivos png alfabéticamente
+        archivos_png.sort()
         
-        # Verifica si hay al menos un archivo jpeg en la carpeta
-        if archivos_jpeg:
-            primer_archivo = archivos_jpeg[0]
+        # Verifica si hay al menos un archivo png en la carpeta
+        if archivos_png:
+            primer_archivo = archivos_png[0]
             nombre_archivo = os.path.splitext(primer_archivo)[0]
             nombre_escena, numero_frame = nombre_archivo.split(".")
             numero_frame = int(numero_frame)
@@ -50,7 +50,7 @@ for carpeta in os.listdir(directorio_raiz):
             import subprocess
             import os
 
-            # Directorio de las imágenes jpeg
+            # Directorio de las imágenes png
             input_directory = carpeta_path
 
             # Nombre del archivo de salida
@@ -60,14 +60,14 @@ for carpeta in os.listdir(directorio_raiz):
             timecode = hhmmss  # Por ejemplo, comenzar en 0 horas, 0 minutos, 0 segundos y 0 fotogramas
 
             # Obtener la lista de archivos en el directorio de entrada
-            image_files = sorted([f for f in os.listdir(input_directory) if f.endswith(".jpeg")])
+            image_files = sorted([f for f in os.listdir(input_directory) if f.endswith(".png")])
 
             # Construir una lista de argumentos para FFmpeg
             ffmpeg_args = [
                 "ffmpeg",
                 "-framerate", "24",  # Tasa de fotogramas de salida (ajusta según sea necesario)
                 "-start_number", str(numero_frame),  # Número de inicio para los nombres de archivo
-                "-i", input_directory + f"{nombre_escena}.%07d.jpeg",  # Patrón de nombres de archivo
+                "-i", input_directory + f"{nombre_escena}.%07d.png",  # Patrón de nombres de archivo
                 "-c:v", "libx264",
                 "-pix_fmt", "yuv420p",
                 "-crf", "18",  # Calidad de compresión (ajusta según sea necesario)
