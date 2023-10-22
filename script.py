@@ -4,7 +4,7 @@ import os
 directorio_raiz = "D:/Videojuegos/EpicGames/UnrealMultiguerras/Saved/MovieRenders"
 
 # Velocidad de cuadro (FPS)
-fps = 24
+fps = 30
 
 # Función para calcular el tiempo en segundos para un frame dado
 def calcular_tiempo(frame, fps):
@@ -65,7 +65,7 @@ for carpeta in os.listdir(directorio_raiz):
             # Construir una lista de argumentos para FFmpeg
             ffmpeg_args = [
                 "ffmpeg",
-                "-framerate", "24",  # Tasa de fotogramas de salida (ajusta según sea necesario)
+                "-framerate", str(fps),  # Tasa de fotogramas de salida (ajusta según sea necesario)
                 "-start_number", str(numero_frame),  # Número de inicio para los nombres de archivo
                 "-i", input_directory + f"{nombre_escena}.%07d.png",  # Patrón de nombres de archivo
                 "-c:v", "libx264",
