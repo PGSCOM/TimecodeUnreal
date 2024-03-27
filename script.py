@@ -65,14 +65,14 @@ for carpeta in os.listdir(directorio_raiz):
             # Construir una lista de argumentos para FFmpeg
             ffmpeg_args = [
                 "ffmpeg",
-                "-framerate", str(fps),  # Tasa de fotogramas de salida (ajusta según sea necesario)
-                "-start_number", str(numero_frame),  # Número de inicio para los nombres de archivo
-                "-i", input_directory + f"{nombre_escena}.%07d.png",  # Patrón de nombres de archivo
-                "-c:v", "libx264",
-                "-pix_fmt", "yuv420p",
-                "-crf", "18",  # Calidad de compresión (ajusta según sea necesario)
-                "-timecode", timecode + ":00",  # Agrega ":00" al final del timecode
-                output_file
+                "-framerate", str(fps),                                 # Tasa de fotogramas de salida (ajusta según sea necesario)
+                "-start_number", str(numero_frame),                     # Número de inicio para los nombres de archivo
+                "-i", input_directory + f"{nombre_escena}.%07d.png",    # Patrón de nombres de archivo
+                "-c:v", "libx264",                                      # Códec de video (H.264)
+                "-pix_fmt", "yuv420p",                                  # Formato de píxeles
+                "-crf", "18",                                           # Calidad de compresión (ajusta según sea necesario)
+                "-timecode", timecode + ":00",                          # Agrega ":00" al final del timecode
+                output_file                                             # Nombre del archivo de salida
             ]
 
 
