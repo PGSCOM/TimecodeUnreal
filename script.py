@@ -78,6 +78,9 @@ for carpeta in os.listdir(directorio_raiz):
                 "-pix_fmt", "yuv420p",                                  # Formato de píxeles
                 "-crf", "18",                                           # Calidad de compresión (ajusta según sea necesario)
                 "-timecode", timecode + ":00",                          # Agrega ":00" al final del timecode
+                "-map", "0:v",
+                "-metadata:s:a:0", f"com.apple.proapps.scene={scene}",    # Metadatos de la escena
+                "-metadata:s:a:1", f"com.apple.proapps.shot={shot}",      # Metadatos del plano
                 output_file                                             # Nombre del archivo de salida
             ]
 
