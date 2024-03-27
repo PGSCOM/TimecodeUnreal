@@ -35,6 +35,8 @@ for carpeta in os.listdir(directorio_raiz):
             primer_archivo = archivos_png[0]
             nombre_archivo = os.path.splitext(primer_archivo)[0]
             nombre_escena, numero_frame = nombre_archivo.split(".")
+            print("\nnombre escena: ", nombre_escena)
+            print("\nnumero frame: ", numero_frame, "\n")
             numero_frame = int(numero_frame)
             tiempo_segundos = calcular_tiempo(numero_frame, fps)
             hhmmss = formato_segundos(tiempo_segundos)
@@ -79,8 +81,9 @@ for carpeta in os.listdir(directorio_raiz):
                 output_file                                             # Nombre del archivo de salida
             ]
 
+            print("Argumentos FFmpeg:", str(ffmpeg_args))
 
             # Ejecutar el comando FFmpeg para crear el video
             subprocess.run(ffmpeg_args)
 
-            print(f"Video creado con timecode y guardado como '{output_file}'.")
+            print(f"\nVideo creado con timecode y guardado como '{output_file}'.")
