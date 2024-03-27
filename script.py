@@ -1,4 +1,6 @@
 import os
+from datetime import datetime
+import csv
 
 # Directorio raíz donde se encuentran las carpetas con las secuencias de png
 directorio_raiz = "Z:\_Unreal\Testear"
@@ -17,6 +19,18 @@ def formato_segundos(segundos):
     minutos = int(segundos_restantes // 60)
     segundos = int(segundos_restantes % 60)
     return f"{horas:02d}:{minutos:02d}:{segundos:02d}"
+
+
+# Nombre del archivo CSV
+nombre_csv = f"{datetime.now().strftime("%H:%M:%S")}.csv".replace(":", "-")
+
+
+# Abre el archivo CSV en modo de escritura
+with open(f"{directorio_raiz}\{nombre_csv}", mode='a', newline='') as file:  
+    # Escribe la cabecera del CSV
+    csv.writer(file).writerow([
+        'File Name', 'Scene', 'Take'
+    ])
 
 
 # Recorre todas las carpetas en el directorio raíz
@@ -87,3 +101,7 @@ for carpeta in os.listdir(directorio_raiz):
             subprocess.run(ffmpeg_args)
 
             print(f"\nVideo creado con timecode y guardado como '{output_file}'.")
+
+            with open(f"{directorio_raiz}\{nombre_csv}", mode='a', newline='') as file:
+                # Escribe la línea CSV con los datos relevantes
+                csv.writer(file).writerow([f"{nombre_escena}.mov", scene, shot])
