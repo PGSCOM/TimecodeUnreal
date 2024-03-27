@@ -1,7 +1,7 @@
 import os
 
 # Directorio raíz donde se encuentran las carpetas con las secuencias de png
-directorio_raiz = "D:/Videojuegos/EpicGames/UnrealMultiguerras/Saved/MovieRenders"
+directorio_raiz = "Z:\_Unreal\Testear"
 
 # Velocidad de cuadro (FPS)
 fps = 30
