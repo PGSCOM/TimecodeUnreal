@@ -62,6 +62,10 @@ for carpeta in os.listdir(directorio_raiz):
             # Obtener la lista de archivos en el directorio de entrada
             image_files = sorted([f for f in os.listdir(input_directory) if f.endswith(".png")])
 
+            partes_nombre = nombre_escena.split("_")
+            scene = partes_nombre[1]
+            shot = partes_nombre[2]
+
             # Construir una lista de argumentos para FFmpeg
             ffmpeg_args = [
                 "ffmpeg",
