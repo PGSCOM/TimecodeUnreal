@@ -1,0 +1,21 @@
+Begin Object Class=/Script/MovieRenderPipelineCore.MoviePipelinePrimaryConfig Name="ExportConfig4K" ExportPath="/Script/MovieRenderPipelineCore.MoviePipelinePrimaryConfig'/Game/Escenas/ExportConfig4K.ExportConfig4K'"
+   Begin Object Class=/Script/MovieRenderPipelineRenderPasses.MoviePipelineImageSequenceOutput_PNG Name="MoviePipelineImageSequenceOutput_PNG_1" ExportPath="/Script/MovieRenderPipelineRenderPasses.MoviePipelineImageSequenceOutput_PNG'/Game/Escenas/ExportConfig4K.ExportConfig4K:MoviePipelineImageSequenceOutput_PNG_1'"
+   End Object
+   Begin Object Class=/Script/MovieRenderPipelineRenderPasses.MoviePipelineDeferredPassBase Name="MoviePipelineDeferredPassBase_0" ExportPath="/Script/MovieRenderPipelineRenderPasses.MoviePipelineDeferredPassBase'/Game/Escenas/ExportConfig4K.ExportConfig4K:MoviePipelineDeferredPassBase_0'"
+   End Object
+   Begin Object Class=/Script/MovieRenderPipelineCore.MoviePipelineOutputSetting Name="DefaultOutputSetting" Archetype="/Script/MovieRenderPipelineCore.MoviePipelineOutputSetting'/Script/MovieRenderPipelineCore.Default__MoviePipelinePrimaryConfig:DefaultOutputSetting'" ExportPath="/Script/MovieRenderPipelineCore.MoviePipelineOutputSetting'/Game/Escenas/ExportConfig4K.ExportConfig4K:DefaultOutputSetting'"
+   End Object
+   Begin Object Name="MoviePipelineImageSequenceOutput_PNG_1" ExportPath="/Script/MovieRenderPipelineRenderPasses.MoviePipelineImageSequenceOutput_PNG'/Game/Escenas/ExportConfig4K.ExportConfig4K:MoviePipelineImageSequenceOutput_PNG_1'"
+      bWriteAlpha=False
+   End Object
+   Begin Object Name="MoviePipelineDeferredPassBase_0" ExportPath="/Script/MovieRenderPipelineRenderPasses.MoviePipelineDeferredPassBase'/Game/Escenas/ExportConfig4K.ExportConfig4K:MoviePipelineDeferredPassBase_0'"
+   End Object
+   Begin Object Name="DefaultOutputSetting" ExportPath="/Script/MovieRenderPipelineCore.MoviePipelineOutputSetting'/Game/Escenas/ExportConfig4K.ExportConfig4K:DefaultOutputSetting'"
+      OutputDirectory=(Path="Z:\\_Unreal/{sequence_name}")
+      OutputResolution=(X=3840,Y=2160)
+   End Object
+   OutputSetting="DefaultOutputSetting"
+   DisplayName="ExportConfig4K"
+   Settings(0)="/Script/MovieRenderPipelineRenderPasses.MoviePipelineDeferredPassBase'MoviePipelineDeferredPassBase_0'"
+   Settings(1)="/Script/MovieRenderPipelineRenderPasses.MoviePipelineImageSequenceOutput_PNG'MoviePipelineImageSequenceOutput_PNG_1'"
+End Object
