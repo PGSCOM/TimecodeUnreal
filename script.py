@@ -3,7 +3,7 @@ from datetime import datetime
 import csv
 
 # Directorio raíz donde se encuentran las carpetas con las secuencias de png
-directorio_raiz = "Z:\_Unreal"
+directorio_raiz = r"Z:\_Unreal"
 
 # Velocidad de cuadro (FPS)
 fps = 30
