@@ -102,6 +102,9 @@ for carpeta in os.listdir(directorio_raiz):
 
             print(f"\nVideo creado con timecode y guardado como '{output_file}'.")
 
+            # Print comando ffmpeg
+            print(" ".join(ffmpeg_args))
+
             with open(f"{directorio_raiz}\{nombre_csv}", mode='a', newline='') as file:
                 # Escribe la línea CSV con los datos relevantes
                 csv.writer(file).writerow([f"{nombre_escena}.mov", scene, shot])
