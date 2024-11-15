@@ -22,14 +22,14 @@ def formato_segundos(segundos):
 
 
 # Nombre del archivo CSV
-nombre_csv = f"{datetime.now().strftime("%H:%M:%S")}.csv".replace(":", "-")
+nombre_csv = f"{datetime.now().strftime('%H:%M:%S')}.csv".replace(":", "-")
 
 
 # Abre el archivo CSV en modo de escritura
-with open(f"{directorio_raiz}\{nombre_csv}", mode='a', newline='') as file:  
+with open(rf"{directorio_raiz}\{nombre_csv}", mode='a', newline='') as file:  
     # Escribe la cabecera del CSV
     csv.writer(file).writerow([
-        'File Name', 'Scene', 'Take'
+        'File Name', 'Scene', 'Take', 'Start TC'
     ])
 
 
@@ -39,7 +39,7 @@ for carpeta in os.listdir(directorio_raiz):
     
     # Verifica si la carpeta contiene archivos png
     if os.path.isdir(carpeta_path):
-        archivos_png = [archivo for archivo in os.listdir(carpeta_path) if archivo.endswith(".png")]
+        archivos_png = [archivo for archivo in os.listdir(carpeta_path) if archivo.endswith(".exr")]
         
         # Ordena los archivos png alfabéticamente
         archivos_png.sort()
@@ -70,41 +70,54 @@ for carpeta in os.listdir(directorio_raiz):
             input_directory = carpeta_path
 
             # Nombre del archivo de salida
-            output_file = directorio_raiz + "/" + f"{nombre_escena}.mov"
+            #output_file = directorio_raiz + "/" + f"{nombre_escena}.mov"
 
             # Timecode en formato HH:MM:SS:FF (horas, minutos, segundos, fotogramas)
-            timecode = hhmmss  # Por ejemplo, comenzar en 0 horas, 0 minutos, 0 segundos y 0 fotogramas
+            timecode = f"{hhmmss}:{numero_frame % fps:02d}"  # Añade los fotogramas reales al timecode
 
             # Obtener la lista de archivos en el directorio de entrada
-            image_files = sorted([f for f in os.listdir(input_directory) if f.endswith(".png")])
+            #image_files = sorted([f for f in os.listdir(input_directory) if f.endswith(".exr")])
 
             partes_nombre = nombre_escena.split("_")
             scene = partes_nombre[1]
             shot = partes_nombre[2]
 
-            # Construir una lista de argumentos para FFmpeg
+            
+            '''
             ffmpeg_args = [
-                "ffmpeg",
-                "-framerate", str(fps),                                 # Tasa de fotogramas de salida (ajusta según sea necesario)
-                "-start_number", str(numero_frame),                     # Número de inicio para los nombres de archivo
-                "-i", input_directory + f"{nombre_escena}.%07d.png",    # Patrón de nombres de archivo
-                "-c:v", "libx264",                                      # Códec de video (H.264)
-                "-pix_fmt", "yuv420p",                                  # Formato de píxeles
-                "-crf", "18",                                           # Calidad de compresión (ajusta según sea necesario)
-                "-timecode", timecode + ":00",                          # Agrega ":00" al final del timecode
-                output_file                                             # Nombre del archivo de salida
-            ]
+                            "ffmpeg",
+                            "-framerate", str(fps),                                 # Tasa de fotogramas de salida (ajusta según sea necesario)
+                            "-start_number", str(numero_frame),                     # Número de inicio para los nombres de archivo
+                            "-i", input_directory + f"{nombre_escena}.%07d.png",    # Patrón de nombres de archivo
+                            "-c:v", "libx264",                                      # Códec de video (H.264)
+                            "-pix_fmt", "yuv420p",                                  # Formato de píxeles
+                            "-crf", "18",                                           # Calidad de compresión (ajusta según sea necesario)
+                            "-timecode", timecode + ":00",                          # Agrega ":00" al final del timecode
+                            output_file                                             # Nombre del archivo de salida
+                        ]
+            '''
 
-            print("Argumentos FFmpeg:", str(ffmpeg_args))
+            #print("Argumentos FFmpeg:", str(ffmpeg_args))
 
             # Ejecutar el comando FFmpeg para crear el video
-            subprocess.run(ffmpeg_args)
+            #subprocess.run(ffmpeg_args)
 
-            print(f"\nVideo creado con timecode y guardado como '{output_file}'.")
+            #print(f"\nVideo creado con timecode y guardado como '{output_file}'.")
 
             # Print comando ffmpeg
-            print(" ".join(ffmpeg_args))
+            #print(" ".join(ffmpeg_args))
 
-            with open(f"{directorio_raiz}\{nombre_csv}", mode='a', newline='') as file:
+            # Frame final = frame inicial + número de frames - 1
+            frame_final = numero_frame + len(archivos_png) - 1
+            fnumero_frame = f"{numero_frame:04d}"
+            fframe_final = f"{frame_final:04d}"
+
+            # nombre_clip en este formato Scene_AB1_01.[1870094-1871471].exr
+            nombre_clip = f"{nombre_escena}.[{fnumero_frame}-{fframe_final}].exr"
+            
+            with open(rf"{directorio_raiz}\{nombre_csv}", mode='a', newline='') as file:
                 # Escribe la línea CSV con los datos relevantes
-                csv.writer(file).writerow([f"{nombre_escena}.mov", scene, shot])
+                csv.writer(file).writerow([f"{nombre_clip}", scene, shot, timecode])
+            
+            # Print de la línea CSV
+            print(f"{nombre_escena}.mov", scene, shot)
